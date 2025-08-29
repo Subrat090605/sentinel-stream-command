@@ -98,112 +98,142 @@ export const SecureCommsPanel = ({ isOpen, onToggle }: SecureCommsPanelProps) =>
 
   return (
     <>
-      {/* Toggle Button */}
+      {/* Toggle Button - Bottom Right */}
       <button
         onClick={() => onToggle(!isOpen)}
-        className={`fixed right-4 top-1/2 transform -translate-y-1/2 z-50 p-3 rounded-l-lg border-l border-t border-b border-border tactical-panel transition-all duration-300 ${
+        className={`fixed right-6 bottom-6 z-50 p-4 rounded-full border-2 border-primary bg-background/95 backdrop-blur-sm tactical-panel shadow-lg transition-all duration-300 hover:scale-110 ${
           isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'
         }`}
       >
-        <ChatBubbleLeftRightIcon className="w-6 h-6 text-primary" />
+        <ChatBubbleLeftRightIcon className="w-8 h-8 text-primary" />
       </button>
 
-      {/* Sliding Panel - Bigger Size */}
-      <div className={`fixed right-0 top-0 h-full w-96 bg-background border-l border-border z-40 transform transition-transform duration-300 ${
-        isOpen ? 'translate-x-0' : 'translate-x-full'
+      {/* Bottom Popup Panel - Much Bigger */}
+      <div className={`fixed bottom-0 left-0 right-0 z-40 transform transition-transform duration-300 ${
+        isOpen ? 'translate-y-0' : 'translate-y-full'
       }`}>
-        <div className="h-full flex flex-col tactical-panel rounded-none border-0">
-          {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-border">
-            <div className="flex items-center space-x-2">
-              <LockClosedIcon className="w-5 h-5 text-primary" />
-              <h3 className="font-orbitron font-bold text-primary">SECURE COMMS</h3>
+        <div className="h-[600px] bg-background border-t-2 border-primary/20 tactical-panel rounded-t-xl shadow-2xl">
+          <div className="h-full flex flex-col">
+            {/* Header */}
+            <div className="flex items-center justify-between p-6 border-b border-border bg-gradient-to-r from-primary/5 to-transparent">
+              <div className="flex items-center space-x-3">
+                <LockClosedIcon className="w-6 h-6 text-primary" />
+                <h3 className="font-orbitron font-bold text-xl text-primary">SECURE COMMUNICATIONS</h3>
+              </div>
+              <button 
+                onClick={() => onToggle(false)}
+                className="p-2 rounded-full hover:bg-card transition-colors"
+              >
+                <XMarkIcon className="w-6 h-6 text-muted-foreground" />
+              </button>
             </div>
-            <button 
-              onClick={() => onToggle(false)}
-              className="p-1 rounded hover:bg-card transition-colors"
-            >
-              <XMarkIcon className="w-5 h-5 text-muted-foreground" />
-            </button>
-          </div>
 
-          {/* Online Users */}
-          <div className="p-4 border-b border-border">
-            <div className="text-xs text-muted-foreground mb-2">ACTIVE UNITS</div>
-            <div className="space-y-2">
-              {users.slice(0, 3).map((user) => (
-                <div key={user.id} className="flex items-center space-x-2">
-                  <div className={`w-2 h-2 rounded-full ${getStatusColor(user.status)}`} />
-                  <UserIcon className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-sm font-mono">{user.rank}. {user.name.split(' ')[1]}</span>
+            {/* Content Area */}
+            <div className="flex-1 flex">
+              {/* Left Side - Online Users */}
+              <div className="w-80 p-6 border-r border-border bg-card/30">
+                <div className="text-sm font-semibold text-muted-foreground mb-4 uppercase tracking-wide">ACTIVE UNITS</div>
+                <div className="space-y-3">
+                  {users.map((user) => (
+                    <div key={user.id} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-accent/50 transition-colors">
+                      <div className={`w-3 h-3 rounded-full ${getStatusColor(user.status)}`} />
+                      <UserIcon className="w-5 h-5 text-muted-foreground" />
+                      <div className="flex-1">
+                        <div className="text-sm font-mono font-semibold">{user.rank}. {user.name.split(' ')[1]}</div>
+                        <div className="text-xs text-muted-foreground capitalize">{user.status}</div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3">
-            {messages.map((msg) => (
-              <div key={msg.id} className="space-y-1">
-                <div className="flex items-center space-x-2">
-                  <span className="text-xs font-mono text-primary">{msg.rank}. {msg.sender.split(' ')[1]}</span>
-                  {msg.encrypted && (
-                    <LockClosedIcon className="w-3 h-3 text-accent" title="AES-256 + Signal Protocol" />
-                  )}
-                  <span className="text-xs text-muted-foreground">
-                    {msg.timestamp.toLocaleTimeString()}
-                  </span>
-                </div>
-                <div className="bg-card rounded-lg p-3 text-sm">
-                  {msg.content}
+                
+                {/* System Status */}
+                <div className="mt-6 p-4 bg-primary/5 rounded-lg border border-primary/20">
+                  <div className="text-xs font-semibold text-primary mb-2">SYSTEM STATUS</div>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Encryption:</span>
+                      <span className="text-green-400 font-mono">AES-256</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Protocol:</span>
+                      <span className="text-blue-400 font-mono">Signal</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Connection:</span>
+                      <span className="text-green-400 font-mono">SECURE</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            ))}
-          </div>
 
-          {/* Input Area */}
-          <div className="p-4 border-t border-border">
-            <div className="flex items-center space-x-2 mb-3">
-              <button
-                onMouseDown={() => setIsPTT(true)}
-                onMouseUp={() => setIsPTT(false)}
-                onMouseLeave={() => setIsPTT(false)}
-                className={`p-2 rounded-full transition-colors ${
-                  isPTT ? 'bg-primary text-primary-foreground' : 'bg-card text-muted-foreground hover:text-foreground'
-                }`}
-              >
-                <MicrophoneIcon className="w-4 h-4" />
-              </button>
-              
-              <button className="p-2 rounded hover:bg-card transition-colors">
-                <PaperClipIcon className="w-4 h-4 text-muted-foreground" />
-              </button>
-              
-              <button className="p-2 rounded hover:bg-card transition-colors">
-                <MapPinIcon className="w-4 h-4 text-muted-foreground" />
-              </button>
-            </div>
+              {/* Right Side - Messages */}
+              <div className="flex-1 flex flex-col">
+                {/* Messages */}
+                <div className="flex-1 overflow-y-auto p-6 space-y-4">
+                  {messages.map((msg) => (
+                    <div key={msg.id} className="space-y-2">
+                      <div className="flex items-center space-x-3">
+                        <span className="text-sm font-mono font-semibold text-primary">{msg.rank}. {msg.sender.split(' ')[1]}</span>
+                        {msg.encrypted && (
+                          <LockClosedIcon className="w-4 h-4 text-accent" title="AES-256 + Signal Protocol" />
+                        )}
+                        <span className="text-xs text-muted-foreground">
+                          {msg.timestamp.toLocaleTimeString()}
+                        </span>
+                      </div>
+                      <div className="bg-card rounded-lg p-4 text-sm border border-border shadow-sm">
+                        {msg.content}
+                      </div>
+                    </div>
+                  ))}
+                </div>
 
-            <div className="flex space-x-2">
-              <input
-                type="text"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Type secure message..."
-                className="flex-1 bg-input border border-border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-              <button
-                onClick={sendMessage}
-                className="btn-tactical"
-              >
-                SEND
-              </button>
-            </div>
-            
-            <div className="text-xs text-muted-foreground mt-2 flex items-center space-x-1">
-              <LockClosedIcon className="w-3 h-3" />
-              <span>End-to-end encrypted • AES-256</span>
+                {/* Input Area */}
+                <div className="p-6 border-t border-border bg-gradient-to-r from-card/50 to-transparent">
+                  <div className="flex items-center space-x-3 mb-4">
+                    <button
+                      onMouseDown={() => setIsPTT(true)}
+                      onMouseUp={() => setIsPTT(false)}
+                      onMouseLeave={() => setIsPTT(false)}
+                      className={`p-3 rounded-full transition-all duration-200 ${
+                        isPTT ? 'bg-primary text-primary-foreground scale-110' : 'bg-card text-muted-foreground hover:text-foreground hover:scale-105'
+                      }`}
+                    >
+                      <MicrophoneIcon className="w-5 h-5" />
+                    </button>
+                    
+                    <button className="p-3 rounded-full bg-card text-muted-foreground hover:text-foreground hover:scale-105 transition-all duration-200">
+                      <PaperClipIcon className="w-5 h-5" />
+                    </button>
+                    
+                    <button className="p-3 rounded-full bg-card text-muted-foreground hover:text-foreground hover:scale-105 transition-all duration-200">
+                      <MapPinIcon className="w-5 h-5" />
+                    </button>
+                  </div>
+
+                  <div className="flex space-x-3">
+                    <input
+                      type="text"
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      onKeyPress={handleKeyPress}
+                      placeholder="Type secure message..."
+                      className="flex-1 bg-input border border-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    />
+                    <button
+                      onClick={sendMessage}
+                      className="btn-tactical px-6 py-3 text-sm font-semibold"
+                    >
+                      SEND
+                    </button>
+                  </div>
+                  
+                  <div className="text-xs text-muted-foreground mt-3 flex items-center space-x-2">
+                    <LockClosedIcon className="w-4 h-4" />
+                    <span>End-to-end encrypted • AES-256 + Signal Protocol</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

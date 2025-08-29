@@ -1,15 +1,27 @@
 import { useState, useEffect } from 'react';
 import { CommandHeader } from '@/components/CommandHeader';
+import { Taskbar } from '@/components/Taskbar';
 import { SurveillanceGrid } from '@/components/SurveillanceGrid';
 import { ThreatAnalysisPanel } from '@/components/ThreatAnalysisPanel';
 import { SecureCommsPanel } from '@/components/SecureCommsPanel';
 import { StatusFooter } from '@/components/StatusFooter';
-import { MiniMap } from '@/components/MiniMap';
+import { TacticalMap } from '@/components/TacticalMap';
 import { SoldierSupportPanel } from '@/components/SoldierSupportPanel';
 
-const Index = () => {
+interface User {
+  username: string;
+  rank: string;
+}
+
+interface IndexProps {
+  currentUser: User | null;
+  onLogout: () => void;
+}
+
+const Index = ({ currentUser, onLogout }: IndexProps) => {
   const [missionTime, setMissionTime] = useState(0);
   const [commsOpen, setCommsOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('surveillance');
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -19,35 +31,66 @@ const Index = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const renderSectionContent = () => {
+    switch (activeSection) {
+      case 'surveillance':
+        return (
+          <div className="col-span-12 space-y-4">
+            <div className="h-[500px]">
+              <SurveillanceGrid />
+            </div>
+          </div>
+        );
+      
+      case 'map':
+        return (
+          <div className="col-span-12 space-y-4">
+            <div className="h-[600px]">
+              <TacticalMap />
+            </div>
+          </div>
+        );
+      
+      case 'soldier-support':
+        return (
+          <div className="col-span-12 space-y-4">
+            <div className="h-[500px]">
+              <SoldierSupportPanel />
+            </div>
+          </div>
+        );
+      
+      case 'threat-analysis':
+        return (
+          <div className="col-span-12 space-y-4">
+            <div className="h-[500px]">
+              <ThreatAnalysisPanel />
+            </div>
+          </div>
+        );
+      
+      default:
+        return (
+          <div className="col-span-12 space-y-4">
+            <div className="h-[500px]">
+              <SurveillanceGrid />
+            </div>
+          </div>
+        );
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <CommandHeader missionTime={missionTime} />
+      <CommandHeader 
+        missionTime={missionTime} 
+        currentUser={currentUser}
+        onLogout={onLogout}
+      />
+      <Taskbar activeSection={activeSection} onSectionChange={setActiveSection} />
       
       <main className="flex-1 p-4 grid grid-cols-12 gap-4 relative">
-        {/* Surveillance Grid - Left Side */}
-        <div className="col-span-8 space-y-4">
-          <div className="h-[400px]">
-            <SurveillanceGrid />
-          </div>
-          
-          {/* Tactical Map */}
-          <div className="h-64">
-            <MiniMap />
-          </div>
-        </div>
-        
-        {/* Right Side Dashboard */}
-        <div className="col-span-4 space-y-4">
-          {/* Threat Analysis Dashboard */}
-          <div className="h-[320px]">
-            <ThreatAnalysisPanel />
-          </div>
-          
-          {/* Soldier Support Panel */}
-          <div className="h-[344px]">
-            <SoldierSupportPanel />
-          </div>
-        </div>
+        {renderSectionContent()}
         
         {/* Secure Communications - Larger Sliding Panel */}
         <SecureCommsPanel isOpen={commsOpen} onToggle={setCommsOpen} />

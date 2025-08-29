@@ -4,14 +4,22 @@ import {
   ClockIcon, 
   UserIcon, 
   SignalIcon,
-  BellIcon 
+  BellIcon,
+  ArrowRightOnRectangleIcon
 } from '@heroicons/react/24/outline';
+
+interface User {
+  username: string;
+  rank: string;
+}
 
 interface CommandHeaderProps {
   missionTime: number;
+  currentUser: User | null;
+  onLogout: () => void;
 }
 
-export const CommandHeader = ({ missionTime }: CommandHeaderProps) => {
+export const CommandHeader = ({ missionTime, currentUser, onLogout }: CommandHeaderProps) => {
   const formatMissionTime = (seconds: number) => {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
@@ -68,8 +76,19 @@ export const CommandHeader = ({ missionTime }: CommandHeaderProps) => {
           
           <div className="flex items-center space-x-2 px-3 py-1 bg-card rounded-full">
             <UserIcon className="w-4 h-4 text-foreground" />
-            <span className="text-sm font-mono">CDR. MARTINEZ</span>
+            <span className="text-sm font-mono">
+              {currentUser ? `${currentUser.rank}. ${currentUser.username.toUpperCase()}` : 'UNAUTHORIZED'}
+            </span>
           </div>
+
+          {/* Logout Button */}
+          <button
+            onClick={onLogout}
+            className="flex items-center space-x-2 px-3 py-1 bg-destructive/20 hover:bg-destructive/30 border border-destructive/30 rounded-full transition-colors"
+          >
+            <ArrowRightOnRectangleIcon className="w-4 h-4 text-destructive" />
+            <span className="text-sm font-mono text-destructive">LOGOUT</span>
+          </button>
         </div>
       </div>
     </header>

@@ -6,6 +6,7 @@ import {
   EyeIcon,
   EyeSlashIcon
  } from '@heroicons/react/24/outline';
+import { FullscreenCamera } from './FullscreenCamera';
 
 interface CameraFeed {
   id: string;
@@ -28,6 +29,7 @@ export const SurveillanceGrid = () => {
   const [gridSize, setGridSize] = useState<'2x2' | '3x3' | '1x1'>('2x2');
   const [autoRotate, setAutoRotate] = useState(false);
   const [expandedFeed, setExpandedFeed] = useState<string | null>(null);
+  const [fullscreenFeed, setFullscreenFeed] = useState<CameraFeed | null>(null);
   const [feeds, setFeeds] = useState<CameraFeed[]>([
     {
       id: 'CAM-01',
@@ -105,6 +107,25 @@ export const SurveillanceGrid = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const handleFullscreen = (feed: CameraFeed, e: React.MouseEvent) => {
+    e.stopPropagation();
+    console.log('Fullscreen button clicked for feed:', feed.id);
+    setFullscreenFeed(feed);
+  };
+
+  const handleFeedClick = (feedId: string) => {
+    if (gridSize === '1x1') {
+      // In 1x1 mode, clicking opens fullscreen
+      const feed = feeds.find(f => f.id === feedId);
+      if (feed) {
+        setFullscreenFeed(feed);
+      }
+    } else {
+      // In other modes, clicking expands/collapses
+      setExpandedFeed(expandedFeed === feedId ? null : feedId);
+    }
+  };
+
   return (
     <div className="tactical-panel p-4 h-full">
       {/* Header Controls */}
@@ -148,8 +169,10 @@ export const SurveillanceGrid = () => {
         {feeds.slice(0, gridSize === '1x1' ? 1 : gridSize === '2x2' ? 4 : 9).map((feed) => (
           <div 
             key={feed.id} 
-            className="relative bg-black rounded border border-border overflow-hidden group cursor-pointer"
-            onClick={() => setExpandedFeed(expandedFeed === feed.id ? null : feed.id)}
+            className={`relative bg-black rounded border border-border overflow-hidden group cursor-pointer transition-all duration-300 ${
+              expandedFeed === feed.id ? 'ring-2 ring-primary' : ''
+            }`}
+            onClick={() => handleFeedClick(feed.id)}
           >
             {/* Simulated Video Feed */}
             <div className="aspect-video bg-gradient-to-br from-gray-900 to-gray-800 relative">
@@ -192,9 +215,22 @@ export const SurveillanceGrid = () => {
               <div className="text-muted-foreground font-mono text-xs">{feed.gps}</div>
             </div>
 
-            {/* Expand Button */}
-            <button className="absolute top-2 right-2 p-1 bg-black/80 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-              <ArrowsPointingOutIcon className="w-4 h-4 text-foreground" />
+            {/* Fullscreen Button */}
+            <button 
+              className="absolute top-2 right-2 p-2 bg-black/90 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-primary/30 hover:scale-110 z-10 border border-white/20"
+              onClick={(e) => handleFullscreen(feed, e)}
+              title="Fullscreen"
+            >
+              <ArrowsPointingOutIcon className="w-4 h-4 text-white" />
+            </button>
+
+            {/* Always Visible Fullscreen Button */}
+            <button 
+              className="absolute bottom-2 right-2 p-2 bg-primary/80 rounded-lg hover:bg-primary transition-all duration-200 hover:scale-110 z-10"
+              onClick={(e) => handleFullscreen(feed, e)}
+              title="Fullscreen"
+            >
+              <ArrowsPointingOutIcon className="w-4 h-4 text-white" />
             </button>
 
             {/* Threat Alert */}
@@ -205,9 +241,21 @@ export const SurveillanceGrid = () => {
                 </div>
               </div>
             )}
+
+            {/* Hover Overlay */}
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-200" />
           </div>
         ))}
       </div>
+
+      {/* Fullscreen Camera Component */}
+      {fullscreenFeed && (
+        <FullscreenCamera
+          feed={fullscreenFeed}
+          isOpen={!!fullscreenFeed}
+          onClose={() => setFullscreenFeed(null)}
+        />
+      )}
     </div>
   );
 };
