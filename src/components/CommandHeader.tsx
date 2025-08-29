@@ -34,9 +34,9 @@ export const CommandHeader = ({ missionTime, currentUser, onLogout }: CommandHea
         <div className="flex items-center space-x-6">
           <div className="flex items-center space-x-2">
             <ShieldCheckIcon className="w-6 h-6 text-primary hud-glow" />
-            <h1 className="text-xl font-orbitron font-bold text-primary text-glow">
-              SENTINEL STREAM
-            </h1>
+                          <h1 className="text-xl font-orbitron font-bold text-primary text-glow">
+                RAKSHAK
+              </h1>
           </div>
           
           <div className="flex items-center space-x-4 text-sm">

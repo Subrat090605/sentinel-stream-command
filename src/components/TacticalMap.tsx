@@ -343,7 +343,7 @@ export const TacticalMap = () => {
   };
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="tactical-panel h-full flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-border">
         <h2 className="text-lg font-orbitron font-bold text-primary">

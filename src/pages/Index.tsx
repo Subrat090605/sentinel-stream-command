@@ -81,22 +81,37 @@ const Index = ({ currentUser, onLogout }: IndexProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      <CommandHeader 
-        missionTime={missionTime} 
-        currentUser={currentUser}
-        onLogout={onLogout}
-      />
-      <Taskbar activeSection={activeSection} onSectionChange={setActiveSection} />
+    <div className="min-h-screen flex flex-col relative">
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: "url('/images/background.jpg')"
+          }}
+        />
+        {/* Dark overlay for better contrast */}
+        <div className="absolute inset-0 bg-black/30" />
+      </div>
       
-      <main className="flex-1 p-4 grid grid-cols-12 gap-4 relative">
-        {renderSectionContent()}
+      {/* Content */}
+      <div className="relative z-10 flex flex-col min-h-screen">
+        <CommandHeader 
+          missionTime={missionTime} 
+          currentUser={currentUser}
+          onLogout={onLogout}
+        />
+        <Taskbar activeSection={activeSection} onSectionChange={setActiveSection} />
         
-        {/* Secure Communications - Larger Sliding Panel */}
-        <SecureCommsPanel isOpen={commsOpen} onToggle={setCommsOpen} />
-      </main>
-      
-      <StatusFooter />
+        <main className="flex-1 p-4 grid grid-cols-12 gap-4 relative">
+          {renderSectionContent()}
+          
+          {/* Secure Communications - Larger Sliding Panel */}
+          <SecureCommsPanel isOpen={commsOpen} onToggle={setCommsOpen} />
+        </main>
+        
+        <StatusFooter />
+      </div>
     </div>
   );
 };

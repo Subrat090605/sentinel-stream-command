@@ -66,7 +66,7 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
 
     const user = authorizedUsers.find(u => 
       u.username.toLowerCase() === username.toLowerCase() && 
-      password === 'sentinel2024'
+      password === 'rakshak2024'
     );
 
     if (user) {
@@ -81,7 +81,7 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
 
   const handleDemoLogin = () => {
     setUsername('martinez');
-    setPassword('sentinel2024');
+    setPassword('rakshak2024');
   };
 
   return (
@@ -102,7 +102,7 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url('/images/army.jpg')"
+            backgroundImage: "url('/images/background.jpg')"
           }}
         />
         
@@ -145,7 +145,7 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
             <div className="flex items-center justify-center space-x-3 mb-4">
               <ShieldCheckIcon className="w-12 h-12 text-primary animate-pulse" />
               <h1 className="text-3xl font-orbitron font-bold text-primary">
-                SENTINEL STREAM
+                RAKSHAK
               </h1>
             </div>
             <p className="text-muted-foreground text-sm font-mono">
@@ -323,7 +323,7 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
         </div>
         <div className="mt-3 pt-2 border-t border-primary/30">
           <div className="text-xs text-muted-foreground">
-            Default Password: sentinel2024
+            Default Password: rakshak2024
           </div>
         </div>
       </div>

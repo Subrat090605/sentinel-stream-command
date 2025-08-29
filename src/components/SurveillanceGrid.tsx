@@ -92,7 +92,7 @@ export const SurveillanceGrid = () => {
     // Drone Cameras
     {
       id: 'DRONE-01',
-      name: 'SENTINEL-ALPHA',
+      name: 'RAKSHAK-ALPHA',
       location: 'PATROL SECTOR-A',
       gps: '35.6768°N, 139.6515°E',
       isNightVision: true,
@@ -109,7 +109,7 @@ export const SurveillanceGrid = () => {
     },
     {
       id: 'DRONE-02',
-      name: 'SENTINEL-BRAVO',
+      name: 'RAKSHAK-BRAVO',
       location: 'PATROL SECTOR-B',
       gps: '35.6755°N, 139.6485°E',
       isNightVision: true,
@@ -124,7 +124,7 @@ export const SurveillanceGrid = () => {
     },
     {
       id: 'DRONE-03',
-      name: 'SENTINEL-CHARLIE',
+      name: 'RAKSHAK-CHARLIE',
       location: 'PATROL SECTOR-C',
       gps: '35.6772°N, 139.6490°E',
       isNightVision: false,
@@ -141,7 +141,7 @@ export const SurveillanceGrid = () => {
     },
     {
       id: 'DRONE-04',
-      name: 'SENTINEL-DELTA',
+      name: 'RAKSHAK-DELTA',
       location: 'PATROL SECTOR-D',
       gps: '35.6750°N, 139.6520°E',
       isNightVision: true,
