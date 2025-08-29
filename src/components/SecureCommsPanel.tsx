@@ -108,8 +108,8 @@ export const SecureCommsPanel = ({ isOpen, onToggle }: SecureCommsPanelProps) =>
         <ChatBubbleLeftRightIcon className="w-6 h-6 text-primary" />
       </button>
 
-      {/* Sliding Panel */}
-      <div className={`fixed right-0 top-0 h-full w-80 bg-background border-l border-border z-40 transform transition-transform duration-300 ${
+      {/* Sliding Panel - Bigger Size */}
+      <div className={`fixed right-0 top-0 h-full w-96 bg-background border-l border-border z-40 transform transition-transform duration-300 ${
         isOpen ? 'translate-x-0' : 'translate-x-full'
       }`}>
         <div className="h-full flex flex-col tactical-panel rounded-none border-0">

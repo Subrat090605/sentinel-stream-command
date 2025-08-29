@@ -5,6 +5,7 @@ import { ThreatAnalysisPanel } from '@/components/ThreatAnalysisPanel';
 import { SecureCommsPanel } from '@/components/SecureCommsPanel';
 import { StatusFooter } from '@/components/StatusFooter';
 import { MiniMap } from '@/components/MiniMap';
+import { SoldierSupportPanel } from '@/components/SoldierSupportPanel';
 
 const Index = () => {
   const [missionTime, setMissionTime] = useState(0);
@@ -24,21 +25,31 @@ const Index = () => {
       
       <main className="flex-1 p-4 grid grid-cols-12 gap-4 relative">
         {/* Surveillance Grid - Left Side */}
-        <div className="col-span-6 xl:col-span-7">
-          <SurveillanceGrid />
-        </div>
-        
-        {/* Threat Analysis - Center/Right */}
-        <div className="col-span-6 xl:col-span-5 space-y-4">
-          <ThreatAnalysisPanel />
+        <div className="col-span-8 space-y-4">
+          <div className="h-[400px]">
+            <SurveillanceGrid />
+          </div>
           
-          {/* Mini Map */}
+          {/* Tactical Map */}
           <div className="h-64">
             <MiniMap />
           </div>
         </div>
         
-        {/* Secure Communications - Sliding Panel */}
+        {/* Right Side Dashboard */}
+        <div className="col-span-4 space-y-4">
+          {/* Threat Analysis Dashboard */}
+          <div className="h-[320px]">
+            <ThreatAnalysisPanel />
+          </div>
+          
+          {/* Soldier Support Panel */}
+          <div className="h-[344px]">
+            <SoldierSupportPanel />
+          </div>
+        </div>
+        
+        {/* Secure Communications - Larger Sliding Panel */}
         <SecureCommsPanel isOpen={commsOpen} onToggle={setCommsOpen} />
       </main>
       

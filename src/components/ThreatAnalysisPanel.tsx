@@ -103,7 +103,7 @@ export const ThreatAnalysisPanel = () => {
       </div>
 
       {/* Threat List */}
-      <div className="space-y-3 max-h-60 overflow-y-auto">
+      <div className="space-y-3 max-h-48 overflow-y-auto">
         {filteredThreats.length === 0 ? (
           <div className="text-center text-muted-foreground py-8">
             <div className="text-4xl mb-2">✓</div>
