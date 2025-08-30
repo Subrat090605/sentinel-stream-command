@@ -1,7 +1,5 @@
-import { formatDuration } from 'date-fns';
-import { 
-  ShieldCheckIcon, 
-  ClockIcon, 
+import {
+  ClockIcon,
   UserIcon, 
   SignalIcon,
   BellIcon,
@@ -33,10 +31,10 @@ export const CommandHeader = ({ missionTime, currentUser, onLogout }: CommandHea
         {/* Left: Mission Info */}
         <div className="flex items-center space-x-6">
           <div className="flex items-center space-x-2">
-            <ShieldCheckIcon className="w-6 h-6 text-primary hud-glow" />
-                          <h1 className="text-xl font-orbitron font-bold text-primary text-glow">
-                RAKSHAK
-              </h1>
+            <img src="/images/logo.png" alt="RAKSHAK logo" className="w-10 h-10 object-contain" />
+            <h1 className="text-xl font-orbitron font-bold text-primary text-glow">
+              RAKSHAK
+            </h1>
           </div>
           
           <div className="flex items-center space-x-4 text-sm">

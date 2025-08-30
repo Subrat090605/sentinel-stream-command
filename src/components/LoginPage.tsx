@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { 
   EyeIcon, 
   EyeSlashIcon, 
-  ShieldCheckIcon, 
   UserIcon, 
   LockClosedIcon,
   ExclamationTriangleIcon,
@@ -143,7 +142,7 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
           {/* Header */}
           <div className="text-center mb-8">
             <div className="flex items-center justify-center space-x-3 mb-4">
-              <ShieldCheckIcon className="w-12 h-12 text-primary animate-pulse" />
+              <img src="/images/logo.png" alt="RAKSHAK logo" className="w-12 h-12 object-contain animate-pulse" />
               <h1 className="text-3xl font-orbitron font-bold text-primary">
                 RAKSHAK
               </h1>
